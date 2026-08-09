@@ -23,7 +23,7 @@ parser.add_argument('-f', '--file', help="File to write metrics to.")
 args = parser.parse_args()
 
 ## Regex
-pattern = re.compile(r'('+ '|'.join(parseKeys.keys()) + ')\s*(\d*)')
+pattern = re.compile(r'('+ '|'.join(parseKeys.keys()) + r')\s*(\d*)')
 metrics = {}
 output = ''
 
@@ -35,7 +35,7 @@ if args.jail:
 else:
     process = subprocess.Popen(['fail2ban-client', 'status'], stdout=subprocess.PIPE)
     response = process.communicate()[0].decode('utf-8')
-    match = re.search('.+Jail list:\s+(.+)$', response)
+    match = re.search(r'.+Jail list:\s+(.+)$', response)
     jails = match.group(1).split(", ")
 
 for jail in jails:
